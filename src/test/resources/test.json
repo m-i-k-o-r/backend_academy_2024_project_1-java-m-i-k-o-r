@@ -1,0 +1,18 @@
+{
+    "categories": [
+        {
+            "name": "vegetables",
+            "difficulties": [
+                {
+                    "level": 1,
+                    "words": [
+                        {
+                            "word": "onion",
+                            "hint": "cry"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
