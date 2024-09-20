@@ -6,13 +6,16 @@ import java.util.Scanner;
 @SuppressWarnings("regexpsinglelinejava")
 public class Console {
     private final Scanner scanner;
+    private final GallowsStages[] stages;
 
     public Console() {
         this.scanner = new Scanner(System.in, StandardCharsets.UTF_8);
+        this.stages = GallowsStages.values();
     }
 
     public Console(Scanner scanner) {
         this.scanner = scanner;
+        this.stages = GallowsStages.values();
     }
 
     public int getValidInput(String prompt, int maxValue) {
@@ -33,6 +36,11 @@ public class Console {
         }
     }
 
+    public String getStringInput(String prompt) {
+        print(prompt);
+        return scanner.next();
+    }
+
     public void println() {
         System.out.println();
     }
@@ -43,5 +51,58 @@ public class Console {
 
     public void print(String message) {
         System.out.print(message);
+    }
+
+    public void printHealth(int healthNum) {
+        println("Осталось жизней: " + "❤ ".repeat(Math.max(0, healthNum)));
+    }
+
+    public void printGallows(double percent) {
+        double percentValid = percent;
+        if (percent < 0) {
+            percentValid = 0;
+        } else if (percent > 1) {
+            percentValid = 1;
+        }
+        int stage = (int) (percentValid * (stages.length - 1));
+        println(stages[stage].stage());
+    }
+
+    public void printSecretWord(char[] word) {
+        StringBuilder output = new StringBuilder();
+        output.append("Загаданное слово: ");
+        for (char c : word) {
+            if (c == '\u0000') {
+                output.append("_");
+            } else {
+                output.append(c);
+            }
+            output.append(" ");
+        }
+        println(output.toString());
+    }
+
+    public void printHint(boolean isUsedHint, String hint) {
+        if (isUsedHint) {
+            println("Подсказка: " + hint);
+        }
+    }
+
+    public void printWin() {
+        println("""
+
+            ██╗░░░██╗░░░░░██╗░░░░░░░██╗██╗███╗░░██╗
+            ██║░░░██║░░░░░██║░░██╗░░██║██║████╗░██║
+            ██║░░░██║░░░░░╚██╗████╗██╔╝██║██╔██╗██║
+            ██║░░░██║░░░░░░████╔═████║░██║██║╚████║
+            ╚██████╔╝░░░░░░╚██╔╝░╚██╔╝░██║██║░╚███║
+            ░╚═════╝░░░░░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚══╝
+
+            ---====| Поздравляем с победой |====---
+            """);
+    }
+
+    public void printLose() {
+        println(stages[stages.length - 1].stage());
     }
 }

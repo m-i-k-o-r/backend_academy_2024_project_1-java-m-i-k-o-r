@@ -17,5 +17,28 @@ public class Game {
         Difficulty difficulty = settings.selectDifficulty(category.difficulties());
         Word secretWord = settings.selectWord(difficulty.words());
         int maxAttempts = settings.selectAttempts(secretWord.word().length(), difficulty.level());
+
+        console.println("--===| Игра |===--");
+        Session session = new Session(secretWord, maxAttempts);
+
+        while (!session.isGameOver()) {
+            session.printState();
+            session.printCommands();
+
+            String input = console.getStringInput("Введите букву или команду > ");
+
+            if (input.startsWith("-")) {
+                session.handleCommand(input);
+            } else {
+                session.guessLetter(input.charAt(0));
+            }
+
+            if (session.isWordGuessed()) {
+                break;
+            }
+            console.println();
+        }
+
+        session.sumUp();
     }
 }
