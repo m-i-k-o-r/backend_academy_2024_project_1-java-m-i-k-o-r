@@ -3,8 +3,12 @@ package backend.academy;
 import backend.academy.dictionary.Word;
 import backend.academy.game.Session;
 import backend.academy.ui.Console;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -41,6 +45,7 @@ public class SessionTest {
         session.guessLetter('x');
         session.guessLetter('x');
         session.guessLetter('x');
+        assertFalse(session.isWordGuessed());
         assertTrue(session.isGameOver());
     }
 
@@ -50,20 +55,25 @@ public class SessionTest {
         session.guessLetter('e');
         session.guessLetter('s');
         session.guessLetter('t');
+        assertTrue(session.isWordGuessed());
         assertTrue(session.isGameOver());
     }
 
-    @Test
-    void testHandleCommandHint() {
-        session.handleCommand("-hint");
-        verify(console).println("Использована подсказка!");
+    @ParameterizedTest
+    @MethodSource("provideCommandHint")
+    void testHandleCommandHint(String[] commands, String expectedOutput) {
+        for (String command : commands) {
+            session.handleCommand(command.trim());
+        }
+
+        verify(console).println(expectedOutput);
     }
 
-    @Test
-    void testHandleCommandHintAgain() {
-        session.handleCommand("-hint");
-        session.handleCommand("-hint");
-        verify(console).println(" ! Подсказка уже активирована");
+    static Stream<Arguments> provideCommandHint() {
+        return Stream.of(
+            Arguments.of(new String[] {"-hint", "-hint"}, " ! Подсказка уже активирована"),
+            Arguments.of(new String[] {"-hint"}, "Использована подсказка!")
+        );
     }
 
     @Test
@@ -71,6 +81,7 @@ public class SessionTest {
         when(console.getStringInput(anyString())).thenReturn("test");
         session.handleCommand("-all");
         assertTrue(session.isWordGuessed());
+        assertTrue(session.isGameOver());
     }
 
     @Test
