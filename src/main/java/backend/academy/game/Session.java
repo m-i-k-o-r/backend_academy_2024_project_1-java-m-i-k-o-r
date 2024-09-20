@@ -42,9 +42,12 @@ public class Session {
 
     public void guessLetter(char letter) {
         boolean isCorrect = false;
+        String wordLowerCase = secretWord.word().toLowerCase();
+        char letterLowerCase = Character.toLowerCase(letter);
+
         for (int i = 0; i < secretWord.word().length(); i++) {
-            if (secretWord.word().charAt(i) == letter) {
-                guessedWord[i] = letter;
+            if (wordLowerCase.charAt(i) == letterLowerCase) {
+                guessedWord[i] = letterLowerCase;
                 isCorrect = true;
             }
         }

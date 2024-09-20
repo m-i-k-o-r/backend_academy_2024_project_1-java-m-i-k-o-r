@@ -49,14 +49,22 @@ public class SessionTest {
         assertTrue(session.isGameOver());
     }
 
-    @Test
-    void testGameOverAfterGuessed() {
-        session.guessLetter('t');
-        session.guessLetter('e');
-        session.guessLetter('s');
-        session.guessLetter('t');
+    @ParameterizedTest
+    @MethodSource("provideCharsForGuessed")
+    void testGameOverAfterGuessed(char[] chars) {
+        for (char c : chars) {
+            session.guessLetter(c);
+        }
         assertTrue(session.isWordGuessed());
         assertTrue(session.isGameOver());
+    }
+
+    static Stream<char[]> provideCharsForGuessed() {
+        return Stream.of(
+            new char[] {'t', 'e', 's'},
+            new char[] {'T', 'E', 'S'},
+            new char[] {'s', 't', 'E'}
+        );
     }
 
     @ParameterizedTest
