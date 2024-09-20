@@ -4,10 +4,12 @@ import backend.academy.dictionary.Category;
 import backend.academy.dictionary.Difficulty;
 import backend.academy.dictionary.Word;
 import backend.academy.ui.Console;
+import java.security.SecureRandom;
 import java.util.List;
 
 public class Settings {
     private static final int RANDOM_SELECTION = 0;
+    private final SecureRandom random = new SecureRandom();
     private final Console console;
 
     public Settings() {
@@ -32,7 +34,7 @@ public class Settings {
         );
 
         Category category = (selectedCategoryIndex == RANDOM_SELECTION)
-            ? categories.get((int) (Math.random() * categories.size()))
+            ? categories.get(random.nextInt(categories.size()))
             : categories.get(selectedCategoryIndex - 1);
 
         console.println("Выбрана категория: " + category.name());
@@ -55,7 +57,7 @@ public class Settings {
         );
 
         Difficulty difficulty = (selectedDifficultyIndex == RANDOM_SELECTION)
-            ? difficulties.get((int) (Math.random() * difficulties.size()))
+            ? difficulties.get(random.nextInt(difficulties.size()))
             : difficulties.get(selectedDifficultyIndex - 1);
 
         console.println("Выбрана сложность: " + difficulty.toString());
@@ -65,7 +67,7 @@ public class Settings {
     }
 
     public Word selectWord(List<Word> words) {
-        return words.get((int) (Math.random() * words.size()));
+        return words.get(random.nextInt(words.size()));
     }
 
     public int selectAttempts(int lengthWord, int level) {

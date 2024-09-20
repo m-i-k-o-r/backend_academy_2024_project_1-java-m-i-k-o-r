@@ -73,11 +73,11 @@ public class Console {
         output.append("Загаданное слово: ");
         for (char c : word) {
             if (c == '\u0000') {
-                output.append("_");
+                output.append('_');
             } else {
                 output.append(c);
             }
-            output.append(" ");
+            output.append(' ');
         }
         println(output.toString());
     }
