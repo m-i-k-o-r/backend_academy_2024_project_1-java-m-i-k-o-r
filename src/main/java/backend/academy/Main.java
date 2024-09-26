@@ -2,6 +2,7 @@ package backend.academy;
 
 import backend.academy.dictionary.Dictionary;
 import backend.academy.game.Game;
+import backend.academy.game.HangmanGame;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -10,7 +11,7 @@ public class Main {
         Dictionary dictionary = new Dictionary();
         dictionary.init("dictionary.json");
 
-        Game game = new Game();
-        game.startGame(dictionary);
+        Game game = new HangmanGame();
+        game.play(dictionary);
     }
 }
