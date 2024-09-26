@@ -4,6 +4,8 @@ import backend.academy.dictionary.Word;
 import backend.academy.ui.Console;
 
 public class Session {
+    private final static char UNKNOWN_CHAR = '\u0000';
+
     private final Word secretWord;
     private final char[] guessedWord;
 
@@ -33,7 +35,7 @@ public class Session {
 
     public boolean isWordGuessed() {
         for (char c : guessedWord) {
-            if (c == '\u0000') {
+            if (c == UNKNOWN_CHAR) {
                 return false;
             }
         }

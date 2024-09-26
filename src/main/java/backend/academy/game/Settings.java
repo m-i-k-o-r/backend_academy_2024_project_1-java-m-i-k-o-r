@@ -6,10 +6,11 @@ import backend.academy.dictionary.Word;
 import backend.academy.ui.Console;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Random;
 
 public class Settings {
     private static final int RANDOM_SELECTION = 0;
-    private final SecureRandom random = new SecureRandom();
+    private final Random random = new SecureRandom();
     private final Console console;
 
     public Settings() {

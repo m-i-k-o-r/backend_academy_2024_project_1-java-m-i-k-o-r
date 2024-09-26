@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 @SuppressWarnings("regexpsinglelinejava")
 public class Console {
+    private final static char UNKNOWN_CHAR = '\u0000';
+
     private final Scanner scanner;
     private final GallowsStages[] stages;
 
@@ -72,7 +74,7 @@ public class Console {
         StringBuilder output = new StringBuilder();
         output.append("Загаданное слово: ");
         for (char c : word) {
-            if (c == '\u0000') {
+            if (c == UNKNOWN_CHAR) {
                 output.append('_');
             } else {
                 output.append(c);
