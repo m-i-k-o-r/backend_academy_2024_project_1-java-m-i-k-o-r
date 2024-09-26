@@ -4,13 +4,12 @@ import backend.academy.dictionary.Category;
 import backend.academy.dictionary.Dictionary;
 import backend.academy.dictionary.Difficulty;
 import backend.academy.dictionary.Word;
-import java.io.InputStream;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DictionaryTest {
     Dictionary dictionary;
@@ -46,7 +45,6 @@ public class DictionaryTest {
 
     @Test
     void testInitNonexistentFile() {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("nonexistent.json");
-        assertNull(inputStream);
+        assertThrows(IllegalArgumentException.class, () -> dictionary.init("nonexistent.json"));
     }
 }

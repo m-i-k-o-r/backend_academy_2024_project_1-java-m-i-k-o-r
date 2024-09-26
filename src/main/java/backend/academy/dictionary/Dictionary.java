@@ -1,8 +1,11 @@
 package backend.academy.dictionary;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.Resources;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,9 +21,11 @@ public class Dictionary {
 
     public void init(String fileName) {
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileName);
-            this.categories = mapper.readValue(inputStream, Dictionary.class).categories();
+        try (BufferedReader in = new BufferedReader(new FileReader(
+            Resources.getResource(fileName).getFile(),
+            StandardCharsets.UTF_8)
+        )) {
+            this.categories = mapper.readValue(in, Dictionary.class).categories();
         } catch (IOException e) {
             throw new IllegalArgumentException("File not may parsing: ", e);
         }
