@@ -40,6 +40,6 @@ public class HangmanGame implements Game {
             console.println();
         }
 
-        session.sumUp();
+        session.end();
     }
 }

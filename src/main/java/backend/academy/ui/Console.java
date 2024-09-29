@@ -1,23 +1,29 @@
 package backend.academy.ui;
 
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-@SuppressWarnings("regexpsinglelinejava")
 public class Console {
     private static final char UNKNOWN_CHAR = '\u0000';
 
     private final Scanner scanner;
+    private final PrintWriter writer;
+
     private final GallowsStages[] stages;
 
     public Console() {
-        this.scanner = new Scanner(System.in, StandardCharsets.UTF_8);
-        this.stages = GallowsStages.values();
+        this(
+            new Scanner(System.in, StandardCharsets.UTF_8),
+            new OutputStreamWriter(System.out, StandardCharsets.UTF_8)
+        );
     }
 
-    public Console(Scanner scanner) {
+    public Console(Scanner scanner, OutputStreamWriter writer) {
         this.scanner = scanner;
         this.stages = GallowsStages.values();
+        this.writer = new PrintWriter(writer, true);
     }
 
     public int getValidInput(String prompt, int maxValue) {
@@ -44,15 +50,16 @@ public class Console {
     }
 
     public void println() {
-        System.out.println();
+        writer.println();
     }
 
     public void println(String message) {
-        System.out.println(message);
+        writer.println(message);
     }
 
     public void print(String message) {
-        System.out.print(message);
+        writer.print(message);
+        writer.flush();
     }
 
     public void printHealth(int healthNum) {
@@ -106,5 +113,10 @@ public class Console {
 
     public void printLose() {
         println(stages[stages.length - 1].stage());
+    }
+
+    public void close() {
+        scanner.close();
+        writer.close();
     }
 }

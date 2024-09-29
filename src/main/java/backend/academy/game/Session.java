@@ -99,7 +99,7 @@ public class Session {
         console.println("  -all для введения полного слова (всё или ничего)");
     }
 
-    public void sumUp() {
+    public void end() {
         console.println("--===| Конец |===--");
         console.printSecretWord(secretWord.word().toCharArray());
         if (isWordGuessed()) {
@@ -107,5 +107,6 @@ public class Session {
         } else {
             console.printLose();
         }
+        console.close();
     }
 }
