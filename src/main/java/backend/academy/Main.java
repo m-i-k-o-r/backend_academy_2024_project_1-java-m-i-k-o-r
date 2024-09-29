@@ -8,8 +8,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class Main {
     public static void main(String[] args) {
-        Dictionary dictionary = new Dictionary();
-        dictionary.init("dictionary.json");
+        Dictionary dictionary = new Dictionary("dictionary.json");
 
         Game game = new HangmanGame();
         game.play(dictionary);

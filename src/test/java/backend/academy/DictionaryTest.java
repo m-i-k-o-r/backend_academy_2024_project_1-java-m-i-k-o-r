@@ -16,13 +16,11 @@ public class DictionaryTest {
 
     @BeforeEach
     void setUp() {
-        dictionary = new Dictionary();
+        dictionary = new Dictionary("test.json");
     }
 
     @Test
     void testInit() {
-        dictionary.init("test.json");
-
         List<Category> categories = dictionary.categories();
         assertNotNull(categories);
         assertEquals(1, categories.size());
@@ -45,6 +43,6 @@ public class DictionaryTest {
 
     @Test
     void testInitNonexistentFile() {
-        assertThrows(IllegalArgumentException.class, () -> dictionary.init("nonexistent.json"));
+        assertThrows(IllegalArgumentException.class, () -> new Dictionary("nonexistent.json"));
     }
 }
